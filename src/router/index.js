@@ -1,23 +1,46 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+const routes = [{
+  path: '/login',
+  name: 'login',
+  component: () => import('@/views/login')
+}, {
+  path: '/', // 默认页面
+  component: () => import('@/views/layout'),
+  children: [{
+    path: '',
+    name: 'home',
+    component: () => import('@/views/home')
+  }, {
+    path: '/qa',
+    name: 'qa',
+    component: () => import('@/views/qa')
+  }, {
+    path: '/video',
+    name: 'video',
+    component: () => import('@/views/video')
+  }, {
+    path: '/my',
+    name: 'my',
+    component: () => import('@/views/my')
+  }]
+}, {
+  path: '/search',
+  name: 'serarch',
+  component: () => import('@/views/search')
+}, {
+  path: '/article/:articleId',
+  name: 'article',
+  component: () => import('@/views/article'),
+  props: true
+}, {
+  path: '/user/profile',
+  name: 'userprofile',
+  component: () => import('@/views/userprofile')
+}
 ]
 
 const router = new VueRouter({
